@@ -35,7 +35,7 @@
   <div class="mb-3 row">
     <%= form.label :device_type, "Typ:", class: 'col-sm-3 col-form-label' %>
     <div class="col-sm-9">
-      <%= form.select :device_type, ['Desktop', 'Laptop', 'Switch', 'Printer', 'Access Point', 'Server', 'NAS-System'], { include_blank: 'Bitte wählen...' }, class: 'form-select' %>
+      <%= form.select :device_type, Device::DEVICE_TYPES, { include_blank: 'Bitte wählen...' }, class: 'form-select' %>
     </div>
   </div>
 

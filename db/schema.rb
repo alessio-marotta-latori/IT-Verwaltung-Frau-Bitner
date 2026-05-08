@@ -10,12 +10,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[8.0].define(version: 2026_05_08_075847) do
+ActiveRecord::Schema[8.0].define(version: 2026_05_08_082419) do
   create_table "activity_logs", force: :cascade do |t|
     t.string "action"
     t.string "trackable_type"
     t.integer "trackable_id"
     t.text "details"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  create_table "device_triggers", force: :cascade do |t|
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
