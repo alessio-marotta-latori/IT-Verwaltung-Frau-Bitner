@@ -1,0 +1,84 @@
+<%= form_with(model: device, local: true, class: 'p-4 border bg-light mt-3 shadow-sm') do |form| %>
+  
+  <% if device.errors.any? %>
+    <div class="alert alert-danger">
+      <h5>Fehler beim Speichern:</h5>
+      <ul>
+        <% device.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="mb-3 row">
+    <%= form.label :hostname, "Hostname:", class: 'col-sm-3 col-form-label' %>
+    <div class="col-sm-9">
+      <%= form.text_field :hostname, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <%= form.label :ip_address, "IP:", class: 'col-sm-3 col-form-label' %>
+    <div class="col-sm-9">
+      <%= form.text_field :ip_address, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <%= form.label :mac_address, "Mac:", class: 'col-sm-3 col-form-label' %>
+    <div class="col-sm-9">
+      <%= form.text_field :mac_address, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <%= form.label :device_type, "Typ:", class: 'col-sm-3 col-form-label' %>
+    <div class="col-sm-9">
+      <%= form.select :device_type, ['Desktop', 'Laptop', 'Switch', 'Printer', 'Access Point', 'Server', 'NAS-System'], { include_blank: 'Bitte wählen...' }, class: 'form-select' %>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <%= form.label :serial_number, "Serien Nr.:", class: 'col-sm-3 col-form-label' %>
+    <div class="col-sm-9">
+      <%= form.text_field :serial_number, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <%= form.label :purchase_date, "Kauf am:", class: 'col-sm-3 col-form-label' %>
+    <div class="col-sm-9">
+      <%= form.date_field :purchase_date, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <%= form.label :warranty_until, "Garantie bis:", class: 'col-sm-3 col-form-label' %>
+    <div class="col-sm-9">
+      <%= form.date_field :warranty_until, class: 'form-control' %>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <div class="col-sm-3"></div>
+    <div class="col-sm-9">
+      <div class="form-check">
+        <%= form.check_box :active, class: 'form-check-input' %>
+        <%= form.label :active, "Aktiv", class: 'form-check-label' %>
+      </div>
+    </div>
+  </div>
+
+  <div class="mb-3 row">
+    <%= form.label :notes, "Notizen:", class: 'col-sm-3 col-form-label' %>
+    <div class="col-sm-9">
+      <%= form.text_area :notes, class: 'form-control', rows: 3 %>
+    </div>
+  </div>
+
+  <div class="d-flex justify-content-end gap-2 mt-4">
+    <%= link_to 'Abbrechen', devices_path, class: 'btn btn-light border' %>
+    <%= form.submit 'Speichern', class: 'btn btn-primary' %>
+  </div>
+<% end %>

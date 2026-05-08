@@ -1,0 +1,23 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  hostname: MyString
+  ip_address: MyString
+  mac_address: MyString
+  device_type: MyString
+  serial_number: MyString
+  purchase_date: 2026-05-08
+  warranty_until: 2026-05-08
+  active: false
+  notes: MyText
+
+two:
+  hostname: MyString
+  ip_address: MyString
+  mac_address: MyString
+  device_type: MyString
+  serial_number: MyString
+  purchase_date: 2026-05-08
+  warranty_until: 2026-05-08
+  active: false
+  notes: MyText
