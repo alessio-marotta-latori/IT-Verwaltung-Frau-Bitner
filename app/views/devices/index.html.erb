@@ -1,6 +1,15 @@
 <div class="container mt-4">
   <h2>Device-Liste</h2>
 
+  <%# Suche %>
+  <%= form_with url: devices_path, method: :get, local: true, class: 'd-flex gap-2 mt-3 mb-2' do |f| %>
+    <%= f.text_field :search, value: params[:search], placeholder: 'Suche nach Hostname, IP oder Typ...', class: 'form-control' %>
+    <%= f.submit 'Suchen', class: 'btn btn-outline-primary' %>
+    <% if params[:search].present? %>
+      <%= link_to 'Zurücksetzen', devices_path, class: 'btn btn-outline-secondary' %>
+    <% end %>
+  <% end %>
+
   <table class="table table-bordered table-striped table-hover mt-3">
     <thead class="table-primary">
       <tr>
@@ -22,24 +31,39 @@
           <td><%= device.hostname %></td>
           <td><%= device.ip_address %></td>
           <td><%= device.device_type %></td>
-          <td><%= device.active ? 'True' : 'False' %></td>
+          <td>
+            <span class="badge <%= device.active ? 'bg-success' : 'bg-secondary' %>">
+              <%= device.active ? 'Aktiv' : 'Inaktiv' %>
+            </span>
+          </td>
           <td><%= device.mac_address %></td>
           <td><%= device.serial_number %></td>
           <td><%= device.purchase_date %></td>
-          <td><%= device.warranty_until %></td>
+          <td class="<%= 'table-danger' if device.warranty_until&.past? %>">
+            <%= device.warranty_until %>
+            <% if device.warranty_until&.past? %>
+              <span class="badge bg-danger ms-1">Abgelaufen</span>
+            <% end %>
+          </td>
           <td><%= device.notes %></td>
           <td>
             <%= link_to 'Ändern', edit_device_path(device), class: 'btn btn-sm btn-outline-secondary' %>
-            <%= button_to 'Löschen', device, method: :delete, class: 'btn btn-sm btn-outline-danger mt-1', data: { confirm: 'Wirklich löschen?' } %>
+            <%= button_to 'Löschen', device, method: :delete, class: 'btn btn-sm btn-outline-danger mt-1', data: { turbo_confirm: 'Wirklich löschen?' } %>
           </td>
         </tr>
       <% end %>
     </tbody>
   </table>
 
+  <%# Paginierung %>
+  <div class="d-flex justify-content-center">
+    <%== @pagy.bootstrap_series_nav if @pagy.pages > 1 %>
+  </div>
+
   <div class="d-flex gap-2 mt-3">
     <%= link_to 'Neu', new_device_path, class: 'btn btn-light border' %>
     <%= link_to 'Neu Laden', devices_path, class: 'btn btn-light border' %>
     <%= link_to 'Aktivitätsprotokoll', activity_logs_path, class: 'btn btn-light border' %>
+    <%= link_to 'CSV Export', devices_path(format: :csv, search: params[:search]), class: 'btn btn-outline-success border' %>
   </div>
 </div>

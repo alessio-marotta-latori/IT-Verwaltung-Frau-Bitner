@@ -1,5 +1,5 @@
 class ActivityLogsController < ApplicationController
   def index
-    @activity_logs = ActivityLog.order(created_at: :desc)
+    @pagy, @activity_logs = pagy(ActivityLog.order(created_at: :desc), limit: 25)
   end
 end

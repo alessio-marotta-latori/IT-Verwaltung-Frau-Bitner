@@ -15,14 +15,47 @@
       <% @activity_logs.each do |log| %>
         <tr>
           <td><%= log.created_at.strftime("%d.%m.%Y %H:%M") %></td>
-          <td><%= log.action %></td>
+          <td>
+            <%
+              badge_class = case log.action
+                            when "Neu angelegt" then "bg-success"
+                            when "Geändert"     then "bg-warning text-dark"
+                            when "Gelöscht"     then "bg-danger"
+                            else "bg-secondary"
+                            end
+            %>
+            <span class="badge <%= badge_class %>"><%= log.action %></span>
+          </td>
           <td><%= log.trackable_type %></td>
           <td><%= log.trackable_id %></td>
-          <td><%= log.details %></td>
+          <td>
+            <% begin %>
+              <% data = JSON.parse(log.details) %>
+              <ul class="mb-0 ps-3 small">
+                <% data.each do |key, value| %>
+                  <% next if value.nil? || value == "" || value == false %>
+                  <li><strong><%= key %>:</strong>
+                    <% if value.is_a?(Array) %>
+                      <%= value[0].inspect %> → <%= value[1].inspect %>
+                    <% else %>
+                      <%= value %>
+                    <% end %>
+                  </li>
+                <% end %>
+              </ul>
+            <% rescue %>
+              <%= log.details %>
+            <% end %>
+          </td>
         </tr>
       <% end %>
     </tbody>
   </table>
+
+  <%# Paginierung %>
+  <div class="d-flex justify-content-center">
+    <%== @pagy.bootstrap_series_nav if @pagy.pages > 1 %>
+  </div>
 
   <div class="mt-3">
     <%= link_to 'Zurück zur Device-Liste', devices_path, class: 'btn btn-light border' %>
