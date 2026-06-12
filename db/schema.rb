@@ -20,16 +20,11 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_05_084512) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "device_triggers", force: :cascade do |t|
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-  end
-
   create_table "devices", force: :cascade do |t|
-    t.string "hostname"
-    t.string "ip_address"
-    t.string "mac_address"
-    t.string "device_type"
+    t.string "hostname", null: false
+    t.string "ip_address", null: false
+    t.string "mac_address", null: false
+    t.string "device_type", null: false
     t.string "serial_number"
     t.date "purchase_date"
     t.date "warranty_until"
@@ -37,6 +32,7 @@ ActiveRecord::Schema[8.0].define(version: 2026_06_05_084512) do
     t.text "notes"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.index ["hostname"], name: "index_devices_on_hostname", unique: true
   end
 
   create_table "users", force: :cascade do |t|

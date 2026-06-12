@@ -39,7 +39,7 @@
       <tbody>
         <% logs.each do |log| %>
           <tr>
-            <td><%= log.created_at.strftime("%d.%m.%Y %H:%M") %></td>
+            <td><%= log.created_at.in_time_zone("Europe/Berlin").strftime("%d.%m.%Y %H:%M") %></td>
             <td><%= log.action %></td>
             <td><%= log.details %></td>
           </tr>
